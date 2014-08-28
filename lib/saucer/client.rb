@@ -35,21 +35,16 @@ module Saucer
 
     def job_ids(count = 200)
       args = get_iterations(count)
-      faradays = args.pmap do |array|
-        params = query_params(*array)
-        response = api.get('jobs', params)
+      responses = args.pmap do |args|
+        response = api.get('jobs', args)
       end.flatten
-      ids = extract_key(faradays, 'id')
+      ids = extract_key(responses, 'id')
     end
 
-    def extract_key(faradays, key = 'id')
-      job_ids = faradays.map do |item|
+    def extract_key(responses, key = 'id')
+      job_ids = responses.map do |item|
         item.body.map { |i| i[key] }
       end.flatten.uniq
-    end
-
-    def query_params(skip, limit = 100)
-      {skip: skip, limit: limit}
     end
 
     def get_iterations(count)
@@ -58,6 +53,10 @@ module Saucer
       steps = 0.step(count, increment).map { |a| a }
       limits = Array.new(steps.count, increment)
       args = steps.zip(limits)
+      args.each_with_object([]) do |item, obj|
+        skip, limit = item
+        obj << {skip: skip, limit: limit}
+      end
     end
   end
 end
