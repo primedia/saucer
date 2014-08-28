@@ -81,6 +81,7 @@ GEM
     repl_rake (0.1.0)
     require_all (1.3.2)
     slop (3.6.0)
+    stackprof (0.2.7)
     thread_safe (0.3.4)
     virtus (1.0.3)
       axiom-types (~> 0.1)
@@ -103,4 +104,5 @@ DEPENDENCIES
   rake
   require_all
   saucer!
+  stackprof
   virtus

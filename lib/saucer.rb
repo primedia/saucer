@@ -6,7 +6,8 @@ require 'memoist'
 require 'virtus'
 require 'require_all'
 
-require_all "lib/saucer/**/*.rb"
+require_all "lib/core"
+require_all "lib/saucer"
 
 module Saucer
 end

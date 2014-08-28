@@ -16,7 +16,7 @@ module Saucer
 
     def jobs(count = 200)
       ids = job_ids(count)
-      responses = ids.pmap do |id|
+      responses = ids.pmap(100) do |id|
         slug = ['jobs', id].join('/')
         api.get(slug)
       end.flatten
@@ -30,12 +30,12 @@ module Saucer
     memoize :jobs
 
     def normalize_hash_keys(hsh)
-      Hash[hsh.map {|k, v| [k.gsub(/-/, '_'), v] }]
+      Hash[hsh.map {|k, v| [k.underscore('-'), v] }]
     end
 
     def job_ids(count = 200)
       args = get_iterations(count)
-      responses = args.pmap do |args|
+      responses = args.pmap(400) do |args|
         response = api.get('jobs', args)
       end.flatten
       ids = extract_key(responses, 'id')
