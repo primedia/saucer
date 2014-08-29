@@ -41,8 +41,12 @@ module Saucer
       !! error.empty?
     end
 
+    def failed?
+      ! passed?
+    end
+
     def error?
-      ! passsed?
+      ! passed?
     end
   end
 

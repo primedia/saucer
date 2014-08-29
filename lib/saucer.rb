@@ -4,6 +4,7 @@ require 'environs'
 require 'pmap'
 require 'memoist'
 require 'virtus'
+require 'anima'
 require 'require_all'
 
 require_all "lib/core"

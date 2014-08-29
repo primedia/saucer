@@ -7,6 +7,8 @@ gem 'pmap'
 gem 'memoist'
 gem 'require_all'
 gem 'virtus'
+gem 'anima'
+gem 'axlsx'
 
 gem 'pry-uber'
 gem 'stackprof'
