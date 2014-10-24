@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'saucer'
+require 'yaml'
+
+client = Saucer::Client.new
+
+jobs = client.jobs
+
+sauces = jobs.map { |j| Saucer::Job.new(j) }
+
+Saucer::Reporter::Xlsx::Configuration.configure do |c|
+  headers = ["Test Name", "Browser", "Browser Version", "Error Message", "Pass/Fail"]
+  keys = [:name, :browser, :browser_version, :error, :passed?]
+  cfg = Hash[keys.zip(headers)]
+  c.columns_and_keys = cfg
+end
+
+xlsx = Saucer::Reporter::Xlsx.new(jobs: sauces)
+
+xlsx.generate!
+
